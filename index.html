@@ -1,14 +1,32 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Lotto Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <div class="background-mesh"></div>
+    <main class="container">
+        <header>
+            <h1>LOTTO <span>6/45</span></h1>
+            <p>행운의 번호를 확인해보세요</p>
+        </header>
+
+        <section class="display-area">
+            <div id="numbers" class="numbers-container">
+                <!-- Lotto balls will be injected here -->
+                <div class="placeholder">번호를 생성해주세요</div>
+            </div>
+        </section>
+
+        <section class="action-area">
+            <button id="generate" class="glow-button">번호 생성하기</button>
+        </section>
+
+        <lotto-history></lotto-history>
+    </main>
+    <script src="main.js"></script>
 </body>
 </html>
