@@ -16,11 +16,31 @@
         --glass-bg: rgba(255, 255, 255, 0.03);
         --glass-border: rgba(255, 255, 255, 0.1);
         --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.5);
+        --sub-text-color: rgba(255, 255, 255, 0.5);
+        --placeholder-color: rgba(255, 255, 255, 0.2);
+        --mesh-color-1: oklch(40% 0.1 250 / 0.15);
+        --mesh-color-2: oklch(40% 0.1 150 / 0.15);
+        --history-bg: rgba(255, 255, 255, 0.05);
+    }
+
+    [data-theme="light"] {
+        --bg-color: oklch(98% 0.01 250);
+        --text-color: oklch(20% 0.02 250);
+        --accent-color: oklch(60% 0.2 250);
+        --glass-bg: rgba(0, 0, 0, 0.03);
+        --glass-border: rgba(0, 0, 0, 0.1);
+        --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.1);
+        --sub-text-color: rgba(0, 0, 0, 0.5);
+        --placeholder-color: rgba(0, 0, 0, 0.2);
+        --mesh-color-1: oklch(80% 0.1 250 / 0.15);
+        --mesh-color-2: oklch(80% 0.1 150 / 0.15);
+        --history-bg: rgba(0, 0, 0, 0.05);
     }
 
     body {
         background-color: var(--bg-color);
         color: var(--text-color);
+        transition: background-color 0.3s, color 0.3s;
         font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
         display: flex;
         justify-content: center;
@@ -44,14 +64,16 @@
     .background-mesh {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(circle at 20% 30%, oklch(40% 0.1 250 / 0.15) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 70%, oklch(40% 0.1 150 / 0.15) 0%, transparent 50%);
+        background: radial-gradient(circle at 20% 30%, var(--mesh-color-1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 70%, var(--mesh-color-2) 0%, transparent 50%);
         z-index: -1;
+        transition: background 0.3s;
     }
 }
 
 @layer components {
     .container {
+        position: relative;
         width: 90%;
         max-width: 500px;
         padding: 3rem 2rem;
@@ -62,6 +84,26 @@
         box-shadow: var(--shadow-soft);
         text-align: center;
         container-type: inline-size;
+    }
+
+    .theme-toggle {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background: none;
+        border: 1px solid var(--glass-border);
+        color: var(--text-color);
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+    }
+
+    .theme-toggle:hover {
+        background: var(--glass-border);
     }
 
     header h1 {
@@ -76,7 +118,7 @@
     }
 
     header p {
-        color: rgba(255, 255, 255, 0.5);
+        color: var(--sub-text-color);
         font-size: 0.9rem;
         margin-bottom: 2.5rem;
     }
@@ -91,7 +133,7 @@
     }
 
     .placeholder {
-        color: rgba(255, 255, 255, 0.2);
+        color: var(--placeholder-color);
         font-style: italic;
         align-self: center;
     }

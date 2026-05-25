@@ -105,20 +105,28 @@ class LottoHistory extends HTMLElement {
                     display: block;
                     margin-top: 2rem;
                     padding: 1rem;
-                    background: rgba(255, 255, 255, 0.05);
+                    background: var(--history-bg);
                     border-radius: 12px;
                     backdrop-filter: blur(10px);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border: 1px solid var(--glass-border);
                 }
-                h3 { margin-top: 0; color: rgba(255, 255, 255, 0.7); }
+                h3 { 
+                    margin-top: 0; 
+                    color: var(--text-color);
+                    opacity: 0.7;
+                    font-size: 1rem;
+                }
                 .draw-item {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                     padding: 0.5rem 0;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                    border-bottom: 1px solid var(--glass-border);
                 }
-                .draw-date { font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); }
+                .draw-date { 
+                    font-size: 0.8rem; 
+                    color: var(--sub-text-color);
+                }
                 .draw-numbers { display: flex; gap: 4px; }
                 .small-ball {
                     width: 24px;
@@ -128,7 +136,8 @@ class LottoHistory extends HTMLElement {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    background: rgba(255, 255, 255, 0.1);
+                    background: var(--glass-border);
+                    color: var(--text-color);
                 }
             </style>
             <h3>최근 추첨 내역</h3>
@@ -154,6 +163,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const numbersContainer = document.getElementById('numbers');
     const generateButton = document.getElementById('generate');
     const historyComponent = document.querySelector('lotto-history');
+    const themeToggle = document.getElementById('theme-toggle');
+
+    // Theme logic
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    });
+
+    function updateThemeIcon(theme) {
+        themeToggle.innerHTML = theme === 'dark' 
+            ? '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>'
+            : '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>';
+    }
 
     const generateNumbers = () => {
         const numbers = new Set();
